@@ -28,7 +28,6 @@ public class UserService {
         }
         return sInstance;
     }
-
     /**
      * 短信发送
      *
