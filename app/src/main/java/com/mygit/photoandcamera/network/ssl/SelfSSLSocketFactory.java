@@ -82,7 +82,10 @@ public class SelfSSLSocketFactory {
             ////取得KeyManagerFactory和TrustManagerFactory的X509密钥管理器实例
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.
                     getInstance(TrustManagerFactory.getDefaultAlgorithm());
+
+
             trustManagerFactory.init(keyStore);
+
 
             //初始化keystore  //取得BKS密库实例  //加客户端载证书和私钥,通过读取资源文件的方式读取密钥和信任证书
             KeyStore clientKeyStore = KeyStore.getInstance(CertificateConfig.KEY_STORE_TYPE_BKS);

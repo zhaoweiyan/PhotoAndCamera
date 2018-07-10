@@ -12,3 +12,5 @@ public class CertificateConfig {
     public static final String trustStoreFileName = "a.weiyan.com.cer";
     public static final String trustStorePassword = "123456";
 }
+
+

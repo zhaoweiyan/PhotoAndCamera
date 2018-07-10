@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //请求网络接口，根据实际情况编写
         UserService.getInstance().smsSend(this, "电话号码", smsCodeCallback);
-
     }
 
     private ModelBase.OnResult smsCodeCallback = new ModelBase.OnResult() {
