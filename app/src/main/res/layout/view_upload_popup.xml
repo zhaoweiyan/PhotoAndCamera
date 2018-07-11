@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent" >
+
+    <LinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/red" />
+
+        <LinearLayout
+            android:id="@+id/cameraLL"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/item_popupwindows_camera"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/selector_upload_popup"
+                android:text="拍照"
+                android:textColor="#585858"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@drawable/divider_list" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photoLL"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/item_popupwindows_Photo"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/selector_upload_popup"
+                android:text="从相册中选取"
+                android:textColor="#585858"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@drawable/divider_list" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/item_popupwindows_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/selector_upload_popup"
+            android:text="取消"
+            android:textColor="#585858"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>

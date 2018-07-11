@@ -1,18 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mygit.photoandcamera.MainActivity">
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp116"
+        android:layout_marginBottom="@dimen/dp55"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/dp15">
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/rl_upload_first"
+            android:layout_width="@dimen/dp98"
+            android:layout_height="@dimen/dp98"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp10"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image_first"
+                android:layout_width="@dimen/dp89"
+                android:layout_height="@dimen/dp89"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_close_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/close_upload_img" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_upload_second"
+            android:layout_width="@dimen/dp98"
+            android:layout_height="@dimen/dp98"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image_second"
+                android:layout_width="@dimen/dp89"
+                android:layout_height="@dimen/dp89"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_close_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/close_upload_img" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_upload_third"
+            android:layout_width="@dimen/dp98"
+            android:layout_height="@dimen/dp98"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image_third"
+                android:layout_width="@dimen/dp89"
+                android:layout_height="@dimen/dp89"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_close_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/close_upload_img" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_upload_button"
+            android:layout_width="@dimen/dp89"
+            android:layout_height="@dimen/dp89"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp4"
+            android:background="@drawable/bg_upload_img">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp18"
+                android:src="@drawable/upload_camera" />
+
+            <TextView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp7"
+                android:text="上传凭证"
+                android:textColor="@color/scale"
+                android:textSize="@dimen/sp10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_1"
+                android:layout_centerHorizontal="true"
+                android:text="(最多三张)"
+                android:textColor="@color/scale"
+                android:textSize="@dimen/sp10" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

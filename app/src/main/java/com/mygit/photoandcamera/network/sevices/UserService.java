@@ -39,7 +39,7 @@ public class UserService {
         Map<String, String> params = new HashMap<String, String>();
         params.put("mobile", mobile);
         params.put("type", "1");
-        params.put("version", "版本号6.1.0");
+        params.put("version", "6.1.0");
         params.put("phoneType", "android");
         JSONObject json = new JSONObject(params);
         MyProjectApi.getInstance().buildJsonRequest("请求url", json, CodeModel.class, callBack);
