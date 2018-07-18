@@ -1,24 +1,26 @@
 package com.mygit.photoandcamera;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.mygit.photoandcamera.models.ModelBase;
 import com.mygit.photoandcamera.network.sevices.UserService;
 import com.mygit.photoandcamera.permission.InterfacePermissionResult;
 import com.mygit.photoandcamera.permission.PermissionUtils;
+import com.mygit.photoandcamera.populwindow.CommitWindow;
 import com.mygit.photoandcamera.populwindow.ImageWindow;
 import com.mygit.photoandcamera.populwindow.UploadPopupWindows;
 import com.mygit.photoandcamera.utils.BitmapUtils;
@@ -33,7 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements InterfacePermissionResult {
+public class MainActivity extends Activity implements InterfacePermissionResult {
     @Bind(R.id.rl_upload_first)
     RelativeLayout rl_upload_first;
     @Bind(R.id.image_first)
@@ -58,12 +60,16 @@ public class MainActivity extends AppCompatActivity implements InterfacePermissi
     @Bind(R.id.rl_upload_button)
     RelativeLayout rl_upload_button;
 
+    //上传文件
+    @Bind(R.id.tv_refund_commit)
+    TextView tv_refund_commit;
 
     List<File> shopFaceList = new ArrayList<>();
     private MainActivity mContext;
     private PermissionUtils permissionUtils;
     private UploadPopupWindows uploadPopupWindows;
     private ImageWindow imageWindow;
+    private CommitWindow commitWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +79,24 @@ public class MainActivity extends AppCompatActivity implements InterfacePermissi
         ButterKnife.bind(this);
         mContext = this;
         initPremission();
-        imageWindow = new ImageWindow(mContext);
+        iinitPopuWindow();
 
         //请求网络接口，根据实际情况编写(会出现异常，因为url缺失)
 //        UserService.getInstance().smsSend(this, "电话号码", smsCodeCallback);
 
+    }
+
+    private void iinitPopuWindow() {
+        imageWindow = new ImageWindow(mContext);
+        commitWindow = new CommitWindow(mContext, "", "退款/退货前请先联系商家,未沟通请先联系商家,已沟通请点击“确定”提交申请", "取消", "确定");
+        commitWindow.setInterFaceCommitWindow(new ICommitWindow() {
+            @Override
+            public void setClassListner(String name, int position) {
+                if ("yes".equals(name)) {
+                    commitRefund();
+                }
+            }
+        });
     }
 
     private void initPremission() {
@@ -141,13 +160,6 @@ public class MainActivity extends AppCompatActivity implements InterfacePermissi
         imageWindow.showFile(image_third, shopFaceList, 2);
     }
 
-    private ModelBase.OnResult smsCodeCallback = new ModelBase.OnResult() {
-        @Override
-        public void OnListener(ModelBase model) {
-
-        }
-    };
-
     private void showFace() {
         if (shopFaceList.size() == 3) {
             rl_upload_first.setVisibility(View.VISIBLE);
@@ -198,6 +210,19 @@ public class MainActivity extends AppCompatActivity implements InterfacePermissi
         // 200是将图片压缩到最大200KB大小
         return Utils.saveCompressBitmap(BitmapUtils.compressBitmap(filePath, 2), 200, filePath);
     }
+
+
+    private void commitRefund() {
+        UserService.getInstance().upLoadcommit(mContext, "退款原因", shopFaceList, refundCallBack);
+    }
+
+    private ModelBase.OnResult refundCallBack = new ModelBase.OnResult() {
+        @Override
+        public void OnListener(ModelBase model) {
+
+        }
+    };
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -5,10 +5,14 @@ import android.content.Context;
 import com.mygit.photoandcamera.models.CodeModel;
 import com.mygit.photoandcamera.models.ModelBase;
 import com.mygit.photoandcamera.network.MyProjectApi;
+import com.mygit.photoandcamera.utils.LogUtil;
+import com.mygit.photoandcamera.utils.Utils;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +49,29 @@ public class UserService {
         MyProjectApi.getInstance().buildJsonRequest("请求url", json, CodeModel.class, callBack);
     }
 
+    /**
+     * 退款申请
+     *
+     * @param callBack
+     */
+    public void upLoadcommit(Context mContext, String str, List<File> files, ModelBase.OnResult callBack) {
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("orderNo", str);
+
+        params.put("version", Utils.getAppVersion(mContext));
+        params.put("phoneType", "android");
+        JSONObject json = new JSONObject(params);
+
+        for (int i = 0; i < files.size(); i++) {
+            LogUtil.e("file path==" + files.get(i).getAbsolutePath());
+        }
+        LogUtil.e("refundCommit request====" + json);
+
+        MyProjectApi.getInstance().buildMultipartRequest("上传的url", "uploadFile", files, params, CodeModel.class, callBack);
+
+    }
 }
 
 

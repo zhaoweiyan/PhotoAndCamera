@@ -6,4 +6,6 @@ package com.mygit.photoandcamera.models;
 
 public class CodeModel {
 
+
+
 }

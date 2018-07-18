@@ -1,16 +1,8 @@
 package com.mygit.photoandcamera.network;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 
 import com.android.volley.AuthFailureError;
@@ -36,6 +28,7 @@ import com.mygit.photoandcamera.MyApplication;
 import com.mygit.photoandcamera.models.ModelBase;
 import com.mygit.photoandcamera.models.TokenPersist;
 import com.mygit.photoandcamera.network.ssl.SelfSSLSocketFactory;
+import com.mygit.photoandcamera.utils.LogUtil;
 
 import org.json.JSONObject;
 
@@ -208,4 +201,49 @@ public class MyProjectApi {
     }
 
 
+    public void buildMultipartRequest(String urlSuffix, String filepath, List<File> files, Map<String, String> params, final Type classType, final ModelBase.OnResult callBack) {
+        MultipartRequest multipartRequest = new MultipartRequest(urlSuffix, filepath, files, params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null)
+                            LogUtil.e("成功了没result:" + response.toString());
+                        Gson gson = new Gson();
+                        ModelBase model = null;
+                        try {
+                            model = gson.fromJson(response.toString(), classType);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        if (callBack != null && model != null) {
+                            callBack.OnListener(model);
+                        } else {
+//                            MyToast.show(model.resultMsg);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Log.d(TAG, "Error: " + error.getMessage());
+//                        MyToast.show("网络不给力啊");
+                    }
+                }) {
+            //添加请求头
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                TelephonyManager tm = (TelephonyManager) mContext.
+                        getSystemService(Context.TELEPHONY_SERVICE);
+                headers.put("imei", tm.getDeviceId());
+                headers.put("qpToken", TokenPersist.getToken());
+                return headers;
+            }
+        };
+//        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                DEFAULT_TIMEOUT_MS, DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // 将请求添加到队列中
+        mRequestQueue.add(multipartRequest);
+    }
 }

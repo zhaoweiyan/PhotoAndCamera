@@ -1,10 +1,12 @@
 package com.mygit.photoandcamera.populwindow;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
@@ -70,7 +72,14 @@ public class UploadPopupWindows extends PopupWindow {
                     if (!file.getParentFile().exists()) {
                         file.getParentFile().mkdirs();
                     }
-                    cameraUri = Uri.fromFile(file);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果是7.0android系统
+                        ContentValues contentValues = new ContentValues(1);
+                        contentValues.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
+                        cameraUri= mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+                    }else{
+                        cameraUri = Uri.fromFile(file);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
